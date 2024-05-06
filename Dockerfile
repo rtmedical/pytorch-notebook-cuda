@@ -93,7 +93,6 @@ RUN cd /tmp && \
 
 
 RUN git clone https://github.com/DCMTK/dcmtk.git && \
-    git checkout 3.6.4 && \
     mkdir dcmtk-3.6.4-build && \
     cd dcmtk-3.6.4-build && \
     cmake ../dcmtk && \
