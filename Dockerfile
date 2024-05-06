@@ -67,17 +67,7 @@ RUN cargo install evcxr_jupyter && evcxr_jupyter --install
 RUN echo 'source $HOME/.cargo/env' >> $HOME/.bashrc
 
 
-    ### RUST
-
-
-### plastimatch
-RUN cd /tmp && \
-git clone https://gitlab.com/plastimatch/plastimatch.git && \
-cd plastimatch  && \
-mkdir build && cd build && \
-cmake -DINSTALL_PREFIX=/usr .. && \
-make && make install && \
-cp plastimatch /usr/bin
+### RUST
 
 RUN apt-get update && apt-get install -y \
     cmake \
@@ -89,10 +79,21 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     libwrap0-dev \
     && rm -rf /var/lib/apt/lists/*
- 
-RUN git clone https://github.com/DCMTK/dcmtk.git && \
 
-# start build
+
+### plastimatch
+RUN cd /tmp && \
+    git clone https://gitlab.com/plastimatch/plastimatch.git && \
+    cd plastimatch && \
+    git checkout 1.9.4 && \
+    mkdir build && cd build && \
+    cmake -DINSTALL_PREFIX=/usr .. && \
+    make && make install && \
+    cp plastimatch /usr/bin
+
+
+RUN git clone https://github.com/DCMTK/dcmtk.git && \
+    git checkout 3.6.4 && \
     mkdir dcmtk-3.6.4-build && \
     cd dcmtk-3.6.4-build && \
     cmake ../dcmtk && \
